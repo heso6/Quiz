@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Quiz</string>
+    <string-array name="difficulty_levels">
+        <item>Latwy</item>
+        <item>Sredni</item>
+        <item>Trudny</item>
+    </string-array>
+
+</resources>
