@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -42,6 +43,7 @@ public class QuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         ButterKnife.bind(this);
+        Log.d("QuestionActivity", "onCreate");
 
         mQuestions = (List<Question>) getIntent().getSerializableExtra("questions");
         mAnswersArray = new int[mQuestions.size()];
@@ -49,10 +51,40 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("QuestionActivity", "onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("QuestionActivity", "onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("QuestionActivity", "onPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("QuestionActivity", "onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("QuestionActivity", "onDestroy");
+    }
+
+    @Override
         // zapis stanu aplikacji przed zniszczeniem starej Actibity przy obrocie
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
+        Log.d("QuestionActivity", "onCreate");
     // zapisanie udzielonej odpowiedzi na aktualne pytanie
     mAnswersArray[mCurrentQuestion] = mAnswers.getCheckedRadioButtonId();
 
@@ -65,6 +97,7 @@ public class QuestionActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        Log.d("QuestionActivity", "onCreate");
         mCurrentQuestion = savedInstanceState.getInt("position");
         mAnswersArray = savedInstanceState.getIntArray("answers");
 
