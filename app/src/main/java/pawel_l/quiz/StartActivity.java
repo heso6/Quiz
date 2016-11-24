@@ -9,6 +9,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -59,7 +60,7 @@ public class StartActivity extends AppCompatActivity {
         mPrefs.setLevel(selectedLevel);
 
         // TODO Losowanie puli pytan
-        QuestionsDatabase db = null;
+        QuestionsDatabase db = new MemoryQuestionsDatabase();
         List<Question> questions = db.getQuestions(selectedLevel);
         Random random = new Random();
         while (questions.size() > 5 ){
@@ -73,6 +74,7 @@ public class StartActivity extends AppCompatActivity {
 
         // otwarcie nowego ekranu
         Intent questionIntent = new Intent(this, QuestionActivity.class);
+        questionIntent.putExtra("questions", new ArrayList<>(questions));
         startActivity(questionIntent);
     }
 

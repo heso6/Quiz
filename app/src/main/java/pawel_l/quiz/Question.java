@@ -1,5 +1,6 @@
 package pawel_l.quiz;
 
+import java.io.Serializable;
 import java.security.PrivateKey;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import javax.security.auth.PrivateCredentialPermission;
  * Created by gosc on 23.11.2016.
  */
 
-public class Question {
+public class Question implements Serializable {
     
     private String content;
     private int difficulty;
@@ -39,7 +40,7 @@ public class Question {
         this.difficulty = difficulty;
     }
 
-    public List<String> getanswers() {
+    public List<String> getAnswers() {
         return answers;
     }
 
