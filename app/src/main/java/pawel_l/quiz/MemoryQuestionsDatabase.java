@@ -40,7 +40,7 @@ public class MemoryQuestionsDatabase implements QuestionsDatabase {
                 answers.add(badA + "");
             }
 
-            questions.add(new Question(question, randomDifficulty, answers, correctAnswerPosition));
+            questions.add(new Question(question, correctAnswerPosition , answers, randomDifficulty ));
 
         }
 
