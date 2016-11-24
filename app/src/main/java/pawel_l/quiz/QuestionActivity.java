@@ -49,6 +49,29 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     @Override
+        // zapis stanu aplikacji przed zniszczeniem starej Actibity przy obrocie
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    // zapisanie udzielonej odpowiedzi na aktualne pytanie
+    mAnswersArray[mCurrentQuestion] = mAnswers.getCheckedRadioButtonId();
+
+        // Zapisanie biezacej pozycji pytan
+        outState.putInt("position", mCurrentQuestion);
+        // zapisanie tablicy z udzieleniem odpowiedzi przez uzytkownika
+        outState.putIntArray("answers", mAnswersArray);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mCurrentQuestion = savedInstanceState.getInt("position");
+        mAnswersArray = savedInstanceState.getIntArray("answers");
+
+        refreshQuestionView();
+    }
+
+    @Override
     public void onBackPressed() {
         onBackTapped();
     }
@@ -101,6 +124,7 @@ public class QuestionActivity extends AppCompatActivity {
             return;
         }// zapisanie udzielonej odpowiedzi na aktualne pytanie
         mAnswersArray[mCurrentQuestion] = mAnswers.getCheckedRadioButtonId();
+
         mCurrentQuestion--;
         refreshQuestionView();
     }
@@ -122,29 +146,13 @@ public class QuestionActivity extends AppCompatActivity {
             int totalAnswers = mAnswersArray.length;
             displayResults(correctAnswers, totalAnswers);
             return;
-
         }
-
         mCurrentQuestion++;
         refreshQuestionView();
     }
-
     private void displayResults(int correctAnswers, int totalAnswers) {
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("wynik quizu")
-                .setCancelable(false)
-                .setMessage("odpowiedzialem poprawnie na " + correctAnswers + "pytan z " + totalAnswers)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .create();
-        dialog.show();
-
+        QuizResultsDialog.newInstance(correctAnswers, totalAnswers).show(getSupportFragmentManager(), null);
     }
-
     private int countCorrectAnswer() {
         int sum = 0;
 
