@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -27,7 +28,8 @@ public class QuestionActivity extends AppCompatActivity {
     protected RadioGroup mAnswers;
     @BindViews({R.id.answer_a, R.id.answer_b, R.id.answer_c})
     protected List<RadioButton> mAnswersButtons;
-
+    @BindView(R.id.btn_next)
+    protected Button mNextButton;
 
     private int mCurrentQuestion = 0;
     private List<Question> mQuestions;
@@ -85,6 +87,8 @@ public class QuestionActivity extends AppCompatActivity {
             mAnswers.check(mAnswersArray[mCurrentQuestion]);
         }
 
+        mNextButton.setText(mCurrentQuestion < mQuestions.size() - 1 ? "Dalej" : " Zakoncz");
+
     }
 
     @OnClick(R.id.btn_back)
@@ -105,18 +109,22 @@ public class QuestionActivity extends AppCompatActivity {
     protected void onNextClick() {
         // Zapisanie udzielonej odpowiedzi na aktualne  pytanie
         mAnswersArray[mCurrentQuestion] = mAnswers.getCheckedRadioButtonId();
-        if (mCurrentQuestion == mQuestions.size() - 1) {
-            int correctAnswers = countCorrectAnswer();
-            int totalAnswers = mAnswersArray.length;
-            displayResults(correctAnswers, totalAnswers);
-            return;
-        }
         //Sprawdzamy czy uzytkownik wybral cokolwiek (getCheckedButtonId zwroci cos innego niz -1)
         if (mAnswersArray[mCurrentQuestion] == -1) {
             // jezeli nie to wyswietlamy komunikat i zatrzymujemy przejscie dalej (return)
             Toast.makeText(this, "Odpowiedz na pytanie!!", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        // obsluga ostatniego pytania
+        if (mCurrentQuestion == mQuestions.size() - 1) {
+            int correctAnswers = countCorrectAnswer();
+            int totalAnswers = mAnswersArray.length;
+            displayResults(correctAnswers, totalAnswers);
+            return;
+
+        }
+
         mCurrentQuestion++;
         refreshQuestionView();
     }
