@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Quiz</string>
     <string-array name="difficulty_levels">
+        <item>Wybierz poziom trudnosci!</item>
         <item>Latwy</item>
         <item>Sredni</item>
         <item>Trudny</item>
